@@ -6,18 +6,39 @@ export default class NewBill {
     this.document = document
     this.onNavigate = onNavigate
     this.store = store
+
     const formNewBill = this.document.querySelector(`form[data-testid="form-new-bill"]`)
     formNewBill.addEventListener("submit", this.handleSubmit)
+
     const file = this.document.querySelector(`input[data-testid="file"]`)
     file.addEventListener("change", this.handleChangeFile)
+
     this.fileUrl = null
     this.fileName = null
     this.billId = null
+
     new Logout({ document, localStorage, onNavigate })
   }
+
+  // ------------------  BUG 3 [Bug Hunt] - Bills------------------ // 
+
   handleChangeFile = e => {
     e.preventDefault()
-    const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
+    const fileInput = this.document.querySelector(`input[data-testid="file"]`);
+    const file = fileInput.files[0];
+    
+    if (!file) {
+      return;
+    }
+    const isPicture = (mimeType) => ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'].includes(mimeType);
+    if (!isPicture(file.type)) {
+      const errorMessage = document.createElement('div');
+      errorMessage.textContent = "Please upload an image of the format .jpg, .jpeg or .png";
+      errorMessage.style.color = 'darkred';
+      fileInput.parentNode.appendChild(errorMessage);
+      fileInput.value = '';
+      return;
+    }
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length-1]
     const formData = new FormData()

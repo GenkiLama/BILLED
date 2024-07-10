@@ -41,6 +41,9 @@ export default class Login {
     e.preventDefault()
     const user = {
       type: "Admin",
+
+      // ------------------  BUG 2 [Bug report] - LOGIN ------------------ // 
+
       email: e.target.querySelector(`input[data-testid="admin-email-input"]`).value,
       password: e.target.querySelector(`input[data-testid="admin-password-input"]`).value,
       status: "connected"
