@@ -18,10 +18,9 @@ const row = (bill) => {
     </tr>
     `)
   }
-// ------------------  BUG 1 ------------------ // 
+// ------------------  BUG 1 [Bug report] - Bills------------------ // 
 const rows = (data) => {
-  return (data && data.length) ? data.sort((a, b) => new Date(a.date) - new Date(b.date)).map(bill => row(bill)).join("") : ""
-}
+  return (data && data.length) ? data.sort((a, b) => new Date(a.date) - new Date(b.date)).map(bill => row(bill)).join("") : ""}
 
 export default ({ data: bills, loading, error }) => {
   
